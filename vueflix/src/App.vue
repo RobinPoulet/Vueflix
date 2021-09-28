@@ -68,8 +68,8 @@
         <textarea v-model="newDescription" name="description" id="description"
                   placeholder="ecrire la description du film"></textarea>
       </div>
-      <div>
-        <button @click="createNewFilm">Valider la création du film</button>
+      <div class="button-parent">
+        <button @click="createNewFilm" class="btn btn-primary">Valider la création du film</button>
       </div>
     </div>
 
@@ -151,13 +151,34 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+$primary-color: #4169E1;
+$secondary-color: darken($primary-color, 30%);
+
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: $primary-color;
   margin-top: 60px;
+}
+
+h1 {
+  transition: 1s;
+  color: $secondary-color;
+}
+
+h1:hover {
+  color: $primary-color;
+}
+
+.button-parent {
+  transition: 1s;
+  color: $primary-color;
+  &:hover {
+    color: $secondary-color;
+  }
 }
 </style>

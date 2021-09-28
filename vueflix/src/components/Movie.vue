@@ -33,7 +33,7 @@ export default {
     },
     genres: {
       type: Array,
-      default: []
+      default: () => []
     },
     rating: {
       type: Number,
@@ -51,6 +51,17 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+
+$backcolor: #081c8a;
+$button-color: #15c22c;
+
+#movie {
+  background-color: $backcolor;
+}
+
+#select-genre {
+ color: $button-color;
+}
 
 </style>
