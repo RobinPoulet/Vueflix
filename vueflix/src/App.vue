@@ -21,17 +21,13 @@
 
 
     <ul>
-      <li v-for="(movie, index) in filteredMovies" :key="movie.id">
-        <h2>Film n° {{ index + 1 }} : {{ movie.title }}</h2>
-        <label for="select-genre">Liste des genres du film</label>
-        <select name="genre" id="select-genre">
-          <option :value="genre" v-for="(genre, index) in movie.genres" :key="index">
-            {{ genre }}
-          </option>
-        </select>
-        <h5>Rating : {{ movie.rating }}</h5>
-        <p>Review : {{ movie.review }}</p>
-        <p>Description : {{ movie.description }}</p>
+      <li v-for="movie in filteredMovies" :key="movie.id">
+        <movie :title="movie.title"
+               :id="movie.id"
+               :genres="movie.genres"
+               :rating="movie.rating"
+               :review="movie.review"
+               :description="movie.description"/>
       </li>
     </ul>
 
@@ -82,12 +78,14 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
+import Movie from "@/components/Movie";
 
 export default {
   name: 'App',
-  // components: {
+  components: {
   //   HelloWorld
-  // }
+    Movie
+   },
   data: function () {
     return {
       title: "Bienvenue sur VueFlix",
@@ -110,7 +108,7 @@ export default {
         },
         {
           id: 3,
-          titre: "Free guy",
+          title: "Free guy",
           genres: ["comedy", "action", "adventure"],
           rating: 8,
           review: "A bank teller called Guy realizes he is a background character in an open world video game called Free City that will soon go offline.",
