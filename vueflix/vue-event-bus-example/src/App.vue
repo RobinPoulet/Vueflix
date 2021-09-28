@@ -33,7 +33,7 @@
 
     <div>
       <MovieCreation :new-id="movies.length"
-                     :add-movie="addMovie"
+
       />
     </div>
   </div>
@@ -41,6 +41,7 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
+import { EventBus } from './event-bus';
 import Movie from "@/components/Movie";
 import MovieCreation from "@/components/MovieCreation";
 
@@ -95,16 +96,9 @@ export default {
     }
   },
   methods: {
-    addMovie: function () {
-      let newFilm = {
-        id: this.newId,
-        titre: this.newTitle,
-        genres: this.newGenres,
-        rating: this.newRating,
-        review: this.newReview,
-        description: this.newDescription
-      };
-      this.movies.push(newFilm);
+    addMovie: function (newMovie) {
+      this.movies.push(newMovie);
+      EventBus.$on('cliked', this.addMovie)
     }
   }
 }
