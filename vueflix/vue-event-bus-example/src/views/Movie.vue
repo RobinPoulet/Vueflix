@@ -31,30 +31,6 @@
 export default {
   name: "Movie",
   props: {
-    // id: {
-    //   type: Number,
-    //   default: 0
-    // },
-    // title: {
-    //   type: String,
-    //   default: "Toto"
-    // },
-    // genres: {
-    //   type: Array,
-    //   default: () => []
-    // },
-    // rating: {
-    //   type: Number,
-    //   default: 0
-    // },
-    // review: {
-    //   type: String,
-    //   default: "Lorem Ipsum"
-    // },
-    // description: {
-    //   type: String,
-    //   default: "Description du film"
-    // }
     movie: Object,
     id: Number
   }
@@ -62,10 +38,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-v-rating {
-  color:yellow;
-}
 
 
 </style>

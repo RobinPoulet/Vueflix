@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Admin from "@/components/Admin";
-import Movie from "@/components/Movie";
+import Admin from "@/views/Admin";
+import Movie from "@/views/Movie";
 
 
 Vue.use(VueRouter)

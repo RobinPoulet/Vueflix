@@ -7,6 +7,7 @@
       <label for="name">Entrer le nom du film à ajouter</label>
       <input type="text" name="name" id="name" v-model="newTitle" required>
     </div>
+    <input type="text" v-model="search" placeholder="search movies" @change="getResult" />
     <div class="form-example">
       <input type="checkbox" id="comedy" value="comedy" v-model="newGenres">
       <label for="comedy">Comedy</label>
@@ -62,19 +63,23 @@ export default {
       newRating: 0,
       newReview: "",
       newDescription: "",
+      search: ""
     }
   },
     methods: {
       storeMovie: function () {
         let newMovie = {
           id: this.newId,
-          titre: this.newTitle,
+          title: this.newTitle,
           genres: this.newGenres,
           rating: this.newRating,
           review: this.newReview,
           description: this.newDescription
         };
        EventBus.$emit('cliked', newMovie);
+      },
+      getResult: function () {
+        console.log(this.search);
       }
     }
   }

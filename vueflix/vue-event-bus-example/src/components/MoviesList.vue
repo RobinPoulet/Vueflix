@@ -1,9 +1,6 @@
 <template>
-  <div id="app">
 
-    <img alt="Vue logo" src="../assets/logo.png">
-
-    <h1>{{ title }}</h1>
+  <div class="movieslist">
 
     <h5>Nombre de film de la liste : {{ filteredMovies.length }}</h5>
 
@@ -24,40 +21,41 @@
     <ul>
       <li v-for="movie in filteredMovies" :key="movie.id">
         <p>{{ movie.title }}</p>
-        <router-link
+
+        <router-link v-show="admin"
             :to="{
               name: 'Movie',
               params: { id: movie.id, movie: movie}
             }"
-            >
-            <b-button pill variant="info">Info</b-button>
+        >
+          <b-button pill variant="info">Info</b-button>
         </router-link>
+
       </li>
+
     </ul>
 
-    <div>
-      <MovieCreation :new-id="movies.length"
-
-      />
+    <div v-show="admin">
+      <MovieCreation :new-id="movies.length"/>
     </div>
+
   </div>
+
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
-import { EventBus } from '../event-bus';
-import Movie from "@/components/Movie";
+import {EventBus} from "@/event-bus";
 import MovieCreation from "@/components/MovieCreation";
+
+
+
 export default {
-  name: 'App',
+  name: "MoviesList",
   components: {
-    //   HelloWorld
-    Movie,
     MovieCreation
   },
   data: function () {
     return {
-      title: "Bienvenue sur VueFlix",
       movies: [
         {
           id: 1,
@@ -84,8 +82,11 @@ export default {
           description: "Blabla blabla"
         }
       ],
-      selectGenre: ""
+      selectGenre: "",
     }
+  },
+  props: {
+    admin: Boolean
   },
   computed: {
     filteredMovies() {
@@ -101,34 +102,15 @@ export default {
   methods: {
     addMovie: function (newMovie) {
       this.movies.push(newMovie);
-      EventBus.$on('cliked', this.addMovie)
     }
+  },
+  mounted() {
+    EventBus.$on('cliked', this.addMovie);
   }
 }
+
 </script>
 
-<style lang="scss">
-$primary-color: #4169E1;
-$secondary-color: darken($primary-color, 30%);
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  margin-top: 60px;
-}
-h1 {
-  transition: 1s;
-  color: $secondary-color;
-}
-h1:hover {
-  color: $primary-color;
-}
-.button-parent {
-  transition: 1s;
-  color: $primary-color;
-  &:hover {
-    color: $secondary-color;
-  }
-}
+<style scoped>
+
 </style>
