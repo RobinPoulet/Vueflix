@@ -19,8 +19,10 @@
 
 
     <ul>
+
       <li v-for="movie in filteredMovies" :key="movie.id">
-        <p>{{ movie.title }}</p>
+
+        <h4>{{ movie.title }}</h4>
 
         <router-link v-show="admin"
             :to="{
