@@ -47,6 +47,7 @@
 
 <script>
 import { EventBus } from "@/event-bus";
+import axios from "axios";
 
 export default {
   name: "MovieCreation",
@@ -63,7 +64,8 @@ export default {
       newRating: 0,
       newReview: "",
       newDescription: "",
-      search: ""
+      search: "",
+      sugestionMovies: []
     }
   },
     methods: {
@@ -80,6 +82,15 @@ export default {
       },
       getResult: function () {
         console.log(this.search);
+        axios
+          .get(
+            "https://api.themoviedb.org/3/search/movie?api_key=80d0dd074cbffeb2db4b0123882c7f44&query="
+              + this.search
+          )
+          .then((response) => (this.sugestionMovies = response.data.results))
+          .catch(e => {
+            alert(e)
+          });
       }
     }
   }
