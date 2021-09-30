@@ -258,6 +258,7 @@ export default {
             genres: this.form.genres
           }).then(() => this.userAdd = true)
           .catch(e => {
+            console.log(e);
             alert(e)
           })
       // let newMovie = {
