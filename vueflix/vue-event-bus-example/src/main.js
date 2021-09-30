@@ -1,10 +1,4 @@
 import Vue from 'vue'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
-
-// Import Bootstrap an BootstrapVue CSS files
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
@@ -20,5 +14,5 @@ new Vue({
   render: h => h(App)
 }).$mount('#app');
 
-[BootstrapVue, IconsPlugin].forEach((x) => Vue.use(x));
+
 

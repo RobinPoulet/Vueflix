@@ -2,26 +2,82 @@
 
   <div class="movie">
 
-    <h1>{{ id }} : {{ movie.title }} </h1>
-
-    <label for="select-genre">Liste des genres du film</label>
-    <select name="genre" id="select-genre">
-      <option :value="genre" v-for="(genre, index) in movie.genres" :key="index">
-        {{ genre }}
-      </option>
-    </select>
-    <div class="text-center mt-12">
-      <v-rating
-          :value="movie.rating"
-          readonly
-          background-color="orange lighten-3"
-          color="warning"
-          length="10"
-          size="64"
-      ></v-rating>
-      <p>Review : {{ movie.review }}</p>
-      <p>Description : {{ movie.description }}</p>
+    <div class="text-center">
+      <v-btn
+          class="ma-2"
+          color="red lighten-1"
+          dark
+      >
+        <v-icon
+            dark
+            left
+        >
+          mdi-arrow-left
+        </v-icon>
+        <router-link to="/admin" style="color: white">Back</router-link>
+      </v-btn>
     </div>
+
+    <h1 class="movie-title">{{ movie.title }}</h1>
+
+    <div class="text-center">
+
+      <v-chip
+          v-for="(genre, index) in movie.genres" :key="index"
+          class="ma-2"
+          color="blue"
+          label
+          text-color="white"
+      >
+        <v-icon left>
+          mdi-label
+        </v-icon>
+        {{ genre }}
+      </v-chip>
+
+    </div>
+
+    <v-card
+        class="mx-auto my-12"
+        max-width="800"
+    >
+      <v-card-title>Note du film</v-card-title>
+
+      <v-card-text>
+        <v-row
+            align="center"
+            class="mx-0"
+        >
+          <v-rating
+              :value="movie.rating"
+              readonly
+              color="yellow"
+              dense
+              length="10"
+              size="60"
+          ></v-rating>
+
+        </v-row>
+
+      </v-card-text>
+
+      <v-divider class="mx-4"></v-divider>
+
+      <v-card-title>Review</v-card-title>
+
+      <v-card-text>
+        <p> {{ movie.review }}</p>
+      </v-card-text>
+
+      <v-divider class="mx-4"></v-divider>
+
+      <v-card-title>Description</v-card-title>
+
+      <v-card-text>
+        <p> {{ movie.description }}</p>
+      </v-card-text>
+
+    </v-card>
 
   </div>
 
@@ -39,5 +95,20 @@ export default {
 
 <style lang="scss">
 
+$primary-color: #4169E1;
+$secondary-color: darken($primary-color, 30%);
+
+.movie-title {
+  transition: 1s;
+  color: $secondary-color;
+  font-size: 100px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  color: deepskyblue;
+}
+
+.movie-title:hover {
+  color: $primary-color;
+}
 
 </style>

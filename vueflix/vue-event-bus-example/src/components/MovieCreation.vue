@@ -28,7 +28,7 @@
             <v-col>
 
               <v-text-field
-                  v-model="newTitle"
+                  v-model="form.title"
                   :rules="titleRules"
                   label="newTitle"
                   size="80"
@@ -40,7 +40,7 @@
             <v-col>
 
               <v-text-field
-                  v-model="newIdMovie"
+                  v-model="form.id"
                   :rules="idMovieRules"
                   label="newIdMovie"
                   required
@@ -59,9 +59,9 @@
             <v-col v-for="(genre, index) in moviesGenres" :key="index">
 
               <v-checkbox
-                  v-model="newGenres"
-                  :label="genre"
-                  :value="genre"
+                  v-model="form.genres"
+                  :label="genre.name"
+                  :value="genre.id"
               ></v-checkbox>
 
             </v-col>
@@ -75,9 +75,10 @@
           <h4>Noter le film</h4>
 
           <v-rating
-              v-model="newRating"
+              v-model="form.rating"
               size="64"
               length="10"
+              color="yellow"
           ></v-rating>
 
         </v-container>
@@ -94,7 +95,7 @@
                   solo
                   name="input-7-4"
                   label="Ecrire la review"
-                  v-model="newReview"
+                  v-model="form.review"
               >
               </v-textarea>
             </v-col>
@@ -106,7 +107,7 @@
                   solo
                   name="input-7-4"
                   label="Ecrire la description"
-                  v-model="newDescription"
+                  v-model="form.description"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -158,34 +159,36 @@
 
         <li v-for="(movie, index) in sugestionMovies" :key="index">
 
+          <v-btn
+              rounded
+              color="primary"
+              @click="addMovieToList(movie)"
+          >
+            Ajouter le film à la liste
+          </v-btn>
+
           <h4>{{ movie.title }}</h4>
 
           <p>Id : {{ movie.id }}</p>
 
-          <b-button
-              type="success-light"
-              @click="addMovieToList(movie)"
-          >
-            Ajouter le film à la liste
-          </b-button>
         </li>
 
       </ul>
 
-      <b-button
+      <v-button
           type="primary-light"
           @click="getResultPreviouspage"
           v-show="currentPageSuggestMovie - 1 > 0"
       >
         &lsaquo;
-      </b-button>
-      <b-button
+      </v-button>
+      <v-button
           type="primary-light"
           @click="getResultNextPage"
           v-show="currentPageSuggestMovie + 1 <= suggestMovieTotalPage"
       >
         &rsaquo;
-      </b-button>
+      </v-button>
 
     </div>
 
@@ -201,19 +204,16 @@ import axios from "axios";
 export default {
   name: "MovieCreation",
   components: {},
-  props: {
-    newId: {
-      type: Number,
-      default: 0
-    }
-  },
   data: function () {
     return {
-      newTitle: "",
-      newGenres: [],
-      newRating: 0,
-      newReview: "",
-      newDescription: "",
+      form: {
+        id: "",
+        title: "",
+        genres: [],
+        rating: 0,
+        review: "",
+        description: ""
+      },
       search: "",
       sugestionMovies: [],
       viewSuggestMovie: false,
@@ -224,31 +224,22 @@ export default {
       titleRules: [
         v => !!v || 'Title is required',
       ],
-      newIdMovie: "",
       idMovieRules: [
         v => !!v || 'Id is required',
       ],
-      moviesGenres: [
-        "comedy",
-        "drama",
-        "thriller",
-        "mystery",
-        "horror",
-        "action",
-        "adventure"
-      ],
+      moviesGenres: [],
       validateForm: false
     }
   },
   methods: {
     storeMovie: function () {
       let newMovie = {
-        id: this.newId,
-        title: this.newTitle,
-        genres: this.newGenres,
-        rating: this.newRating,
-        review: this.newReview,
-        description: this.newDescription
+        id: this.form.id,
+        title: this.form.title,
+        genres: this.form.genres,
+        rating: this.form.rating,
+        review: this.form.review,
+        description: this.form.description
       };
       EventBus.$emit('cliked', newMovie);
     },
@@ -287,8 +278,11 @@ export default {
       this.getResult();
     },
     addMovieToList: function (movie) {
-      this.newTitle = movie.title;
-      this.newIdMovie = movie.id;
+      let movieGenres = [];
+      this.form.title = movie.title;
+      this.form.id = movie.id;
+      movie.genre_ids.forEach(genre => movieGenres.push(genre));
+      this.form.genres = movieGenres;
     },
     reset: function () {
       this.$refs.form.reset
@@ -296,6 +290,19 @@ export default {
     resetValidation: function () {
       this.$refs.form.resetValidation()
     }
+  },
+  mounted() {
+    axios
+      .get("https://api.themoviedb.org/3/genre/movie/list?api_key=80d0dd074cbffeb2db4b0123882c7f44&language=en-US")
+      .then(
+          response => {
+            console.log(response.data.genres);
+            this.moviesGenres = response.data.genres;
+          }
+      )
+      .catch(e => {
+        alert(e)
+      })
   }
 }
 </script>
