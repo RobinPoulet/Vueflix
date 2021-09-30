@@ -87,32 +87,7 @@ export default {
   components: {},
   data: function () {
     return {
-      movies: [
-        {
-          id: 1,
-          title: "Parasite",
-          genres: ["Comedy", "Drama", "Thriller"],
-          rating: 9,
-          review: "With an insightful and searing exploration of human behavior, ‘Parasite’ is a masterfully crafted film that is a definite must watch.",
-          description: "Parasite (Korean: 기생충; RR: Gisaengchoong) is a 2019 South Korean black comedy thriller film directed by Bong Joon-ho, who also co-wrote the screenplay with Han Jin-won."
-        },
-        {
-          id: 2,
-          title: "Old",
-          genres: ["Mystery", "Thriller", "Horror"],
-          rating: 7,
-          review: "A group of families on a tropical holiday discover that the secluded beach where they are staying is somehow causing them to age rapidly – reducing their entire lives into a single day.",
-          description: "Lorem ipsum"
-        },
-        {
-          id: 3,
-          title: "Free guy",
-          genres: ["Comedy", "Action", "Adventure"],
-          rating: 8,
-          review: "A bank teller called Guy realizes he is a background character in an open world video game called Free City that will soon go offline.",
-          description: "Blabla blabla"
-        }
-      ],
+      movies: [],
       selectGenre: "",
       moviesGenres: []
     }
@@ -149,6 +124,7 @@ export default {
         .catch(e => {
           alert(e)
         });
+
   }
 }
 
