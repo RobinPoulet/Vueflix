@@ -22,42 +22,56 @@
 
       </v-row>
 
+      <h2>Liste des films</h2>
+
     </v-container>
 
-    <select id="selectGenre" name="selectGenre" v-model="selectGenre">
-      <option disabled value="">Choisir la catégorie</option>
-      <option>comedy</option>
-      <option>drama</option>
-      <option>thriller</option>
-      <option>mystery</option>
-      <option>horror</option>
-      <option>action</option>
-      <option>adventure</option>
-    </select>
-
-    <span>Sélectioné : {{ selectGenre }}</span>
-
-
-    <ul>
-
-      <li v-for="movie in filteredMovies" :key="movie.id">
-
-        <h4>{{ movie.title }}</h4>
-
-        <router-link v-show="admin"
-            :to="{
+    <v-card
+        class="mx-auto"
+        max-width="1600"
+        tile
+    >
+      <v-list-item two-line v-for="movie in filteredMovies" :key="movie.id">
+        <v-list-item-content>
+          <v-list-item-title>
+            <h3> {{ movie.title }} </h3>
+            <v-rating
+                :value="movie.rating"
+                readonly
+                color="yellow"
+                dense
+                length="10"
+                size="60"
+            ></v-rating>
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            <router-link v-show="admin"
+                         :to="{
               name: 'Movie',
               params: { id: movie.id, movie: movie}
             }"
-        >
-          <b-button pill variant="info">Info</b-button>
-        </router-link>
+            >
+              <v-container
+                  fluid
+                  class="pa-0"
+              >
+                <div class="my-2">
+                  <v-btn
+                      color="success"
+                      dark
+                      large
+                  >
+                    Aller voir la fiche du film
+                  </v-btn>
+                </div>
+              </v-container>
+            </router-link>
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
 
-      </li>
 
-    </ul>
-
-
+    </v-card>
 
   </div>
 
@@ -68,13 +82,9 @@ import {EventBus} from "@/event-bus";
 import axios from "axios";
 
 
-
-
 export default {
   name: "MoviesList",
-  components: {
-
-  },
+  components: {},
   data: function () {
     return {
       movies: [
@@ -112,7 +122,7 @@ export default {
   },
   computed: {
     filteredMovies() {
-      if (this.selectGenre === "") {
+      if (this.selectGenre === "" || !this.selectGenre) {
         return this.movies;
       } else {
         return this.movies.filter(movie => {

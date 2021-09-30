@@ -2,14 +2,6 @@
 
   <div class="movieCreation">
 
-    <h2>Suggestion de film</h2>
-
-    <p>Utiliser la barre de recherche pour avoir une suggestion de films</p>
-
-    <div class="container">
-      <input type="text" v-model="search" placeholder="search movies" @keydown="newSearch"/>
-    </div>
-
     <h2>Ajout d'un film à la liste de film</h2>
 
     <v-container fluid>
@@ -152,43 +144,66 @@
 
     </v-container>
 
+    <h2>Suggestion de film</h2>
+
+    <p>Utiliser la barre de recherche pour avoir une suggestion de films</p>
+
+    <div class="container">
+      <v-container fluid>
+        <v-textarea
+          label="Search Movie"
+          auto-grow
+          outlined
+          row="1"
+          row-height="5"
+          v-model="search"
+          @keydown="newSearch">
+        </v-textarea>
+      </v-container>
+    </div>
+
+
     <div v-show="viewSuggestMovie">
-      <h2>Liste des films suggérés avec la barre search</h2>
 
-      <ul>
+      <v-card
+          class="mx-auto"
+          max-width="1600"
+          tile
+      >
+        <v-list-item two-line v-for="movie in sugestionMovies" :key="movie.id">
+          <v-list-item-content>
+            <v-list-item-title>
+              <h3> {{ movie.title }} </h3>
+              <p>Id : {{ movie.id }}</p>
+            </v-list-item-title>
+            <v-list-item-subtitle>
+              <v-btn
+                  rounded
+                  color="primary"
+                  @click="addMovieToList(movie)"
+              >
+                Ajouter le film à la liste
+              </v-btn>
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
 
-        <li v-for="(movie, index) in sugestionMovies" :key="index">
+      </v-card>
 
-          <v-btn
-              rounded
-              color="primary"
-              @click="addMovieToList(movie)"
-          >
-            Ajouter le film à la liste
-          </v-btn>
-
-          <h4>{{ movie.title }}</h4>
-
-          <p>Id : {{ movie.id }}</p>
-
-        </li>
-
-      </ul>
-
-      <v-button
-          type="primary-light"
+      <v-icon
+          large
           @click="getResultPreviouspage"
           v-show="currentPageSuggestMovie - 1 > 0"
       >
-        &lsaquo;
-      </v-button>
-      <v-button
-          type="primary-light"
+        mdi-chevron-left
+      </v-icon>
+      <v-icon
+          large
           @click="getResultNextPage"
           v-show="currentPageSuggestMovie + 1 <= suggestMovieTotalPage"
       >
-        &rsaquo;
-      </v-button>
+        mdi-chevron-right
+      </v-icon>
 
     </div>
 
@@ -197,7 +212,7 @@
 </template>
 
 <script>
-import {EventBus} from "@/event-bus";
+// import {EventBus} from "@/event-bus";
 import axios from "axios";
 
 
@@ -233,15 +248,27 @@ export default {
   },
   methods: {
     storeMovie: function () {
-      let newMovie = {
-        id: this.form.id,
-        title: this.form.title,
-        genres: this.form.genres,
-        rating: this.form.rating,
-        review: this.form.review,
-        description: this.form.description
-      };
-      EventBus.$emit('cliked', newMovie);
+      axios
+          .post("https://apimovietest.herokuapp.com/api/movies", {
+            id: this.form.id,
+            grade: this.form.rating,
+            commment: this.form.commment,
+            review: this.form.review,
+            title: this.form.title,
+            genres: this.form.genres
+          }).then(() => this.userAdd = true)
+          .catch(e => {
+            alert(e)
+          })
+      // let newMovie = {
+      //   id: this.form.id,
+      //   title: this.form.title,
+      //   genres: this.form.genres,
+      //   rating: this.form.rating,
+      //   review: this.form.review,
+      //   description: this.form.description
+      // };
+      // EventBus.$emit('cliked', newMovie);
     },
     newSearch: function () {
       this.currentPageSuggestMovie = 1;
