@@ -137,7 +137,7 @@ export default {
   },
   methods: {
     rateMovie() {
-      // axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
+      axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
       axios
           .put("https://apimovietest.herokuapp.com/api/movies/1",{
             grade: 6
