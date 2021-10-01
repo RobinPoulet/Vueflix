@@ -109,21 +109,40 @@ export default {
   methods: {
     addMovie: function (newMovie) {
       this.movies.push(newMovie);
-    }
-  },
-  mounted() {
-    EventBus.$on('cliked', this.addMovie);
-    axios
-        .get("https://api.themoviedb.org/3/genre/movie/list?api_key=80d0dd074cbffeb2db4b0123882c7f44&language=en-US")
+    },
+    getAllMoviesGenres: function () {
+      axios
+          .get("https://api.themoviedb.org/3/genre/movie/list?api_key=80d0dd074cbffeb2db4b0123882c7f44&language=en-US")
+          .then(
+              response => {
+                console.log(response.data.genres);
+                this.moviesGenres = response.data.genres;
+              }
+          )
+          .catch(e => {
+            alert(e)
+          });
+    },
+    getAllMovies: function () {
+      axios
+        .get("https://apimovietest.herokuapp.com/api/movies")
         .then(
             response => {
-              console.log(response.data.genres);
-              this.moviesGenres = response.data.genres;
+              const allData = response.data;
+              allData.forEach(data => {
+                this.movies.push(data.value)
+              })
             }
         )
         .catch(e => {
           alert(e)
         });
+    }
+  },
+  mounted() {
+    this.getAllMovies();
+    this.getAllMoviesGenres();
+    EventBus.$on('cliked', this.addMovie);
 
   }
 }
