@@ -141,9 +141,9 @@ export default {
           .put("https://apimovietest.herokuapp.com/api/movies/" + this.id, {
             grade: this.rating
           }).then(() => this.adddRating = true)
-          .catch(e => {
+            .catch(e => {
             alert(e.message)
-          })
+          });
     }
   }
 }
