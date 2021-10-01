@@ -137,13 +137,15 @@ export default {
   },
   methods: {
     rateMovie() {
+      // axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
       axios
-          .put("https://apimovietest.herokuapp.com/api/movies/" + this.id, {
-            grade: this.rating
-          }).then(() => this.adddRating = true)
-            .catch(e => {
+          .put("https://apimovietest.herokuapp.com/api/movies/1",{
+            grade: 6
+          }
+          ).then(() => this.adddRating = true)
+          .catch(e => {
             alert(e.message)
-          });
+          })
     }
   }
 }

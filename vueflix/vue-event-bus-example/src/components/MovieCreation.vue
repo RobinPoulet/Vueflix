@@ -201,6 +201,7 @@ export default {
   },
   methods: {
     storeMovie: function () {
+      axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
       axios
           .post("https://apimovietest.herokuapp.com/api/movies", {
             id: this.form.id,
