@@ -99,7 +99,6 @@
 
     <p>Utiliser la barre de recherche pour avoir une suggestion de films</p>
 
-    <div class="container">
       <v-container fluid>
         <v-textarea
             label="Search Movie"
@@ -111,8 +110,6 @@
             @keydown="newSearch">
         </v-textarea>
       </v-container>
-    </div>
-
 
     <div v-show="viewSuggestMovie">
 
@@ -201,7 +198,7 @@ export default {
   },
   methods: {
     storeMovie: function () {
-      axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
+      // axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
       axios
           .post("https://apimovietest.herokuapp.com/api/movies", {
             id: this.form.id,

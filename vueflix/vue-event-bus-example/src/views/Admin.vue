@@ -5,9 +5,11 @@
 
     <h1>{{ title }}</h1>
 
-    <movies-list :admin="admin"/>
+    <movies-list :admin="true" :playlist="false"/>
 
     <MovieCreation/>
+
+
 
   </div>
 </template>

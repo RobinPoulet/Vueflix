@@ -15,7 +15,7 @@
           <v-checkbox
               v-model="selectGenre"
               :label="genre.name"
-              :value="genre.name"
+              :value="genre.id"
           ></v-checkbox>
 
         </v-col>
@@ -36,7 +36,7 @@
           <v-list-item-title>
             <h3> {{ movie.title }} </h3>
             <v-rating
-                :value="movie.rating"
+                :value="movie.grade"
                 readonly
                 color="yellow"
                 dense
@@ -61,15 +61,39 @@
                       dark
                       large
                   >
-                    Aller voir la fiche du film
+                    Noter le film et/ou laisser un commentaire
                   </v-btn>
+
                 </div>
               </v-container>
             </router-link>
+            <v-btn v-if="admin"
+                   color="warning"
+                   small
+                   @click="deleteMovie(movie.id)"
+            >
+              Supprimer ce film
+            </v-btn>
+            <v-btn v-if="playlist"
+                   color="success"
+                   small
+                   @click="addMovieToPlaylist(movie)"
+            >
+              Ajouter le film à la playlist
+            </v-btn>
+
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
+
+      <v-btn v-if="playlist"
+             color="success"
+             small
+             @click="playlistCreation"
+             >
+        Valider la playlist
+      </v-btn>
 
     </v-card>
 
@@ -88,16 +112,18 @@ export default {
   data: function () {
     return {
       movies: [],
-      selectGenre: "",
-      moviesGenres: []
+      selectGenre: null,
+      moviesGenres: [],
+      playlistMovie: [],
     }
   },
   props: {
-    admin: Boolean
+    admin: Boolean,
+    playlist: Boolean
   },
   computed: {
     filteredMovies() {
-      if (this.selectGenre === "" || !this.selectGenre) {
+      if (this.selectGenre === null) {
         return this.movies;
       } else {
         return this.movies.filter(movie => {
@@ -109,6 +135,9 @@ export default {
   methods: {
     addMovie: function (newMovie) {
       this.movies.push(newMovie);
+    },
+    addMovieToPlaylist: function (movie) {
+      this.playlistMovie.push(movie);
     },
     getAllMoviesGenres: function () {
       axios
@@ -125,25 +154,35 @@ export default {
     },
     getAllMovies: function () {
       axios
-        .get("https://apimovietest.herokuapp.com/api/movies")
-        .then(
-            response => {
-              const allData = response.data;
-              allData.forEach(data => {
-                this.movies.push(data.value)
-              })
-            }
-        )
-        .catch(e => {
-          alert(e)
-        });
+          .get("https://apimovietest.herokuapp.com/api/movies")
+          .then(
+              response => {
+                const allData = response.data;
+                allData.forEach(data => {
+                  this.movies.push(data.value)
+                })
+              }
+          )
+          .catch(e => {
+            alert(e)
+          });
+    },
+    deleteMovie(id) {
+      axios
+          .delete("https://apimovietest.herokuapp.com/api/movies/" + id)
+          .then()
+          .catch(e => {
+            alert(e);
+          })
+    },
+    playlistCreation() {
+      EventBus.$emit('cliked', this.playlistMovie);
     }
   },
   mounted() {
     this.getAllMovies();
     this.getAllMoviesGenres();
     EventBus.$on('cliked', this.addMovie);
-
   }
 }
 

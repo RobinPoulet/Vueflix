@@ -32,7 +32,7 @@
         <v-icon left>
           mdi-label
         </v-icon>
-        {{ genre }}
+        {{ genresNames[genre] }}
       </v-chip>
 
     </div>
@@ -49,7 +49,7 @@
             class="mx-0"
         >
           <v-rating
-              :value="movie.rating"
+              :value="movie.grade"
               readonly
               color="yellow"
               dense
@@ -66,20 +66,12 @@
       <v-card-title>Review</v-card-title>
 
       <v-card-text>
-        <p> {{ movie.review }}</p>
-      </v-card-text>
-
-      <v-divider class="mx-4"></v-divider>
-
-      <v-card-title>Description</v-card-title>
-
-      <v-card-text>
-        <p> {{ movie.description }}</p>
+        <p> {{ movie.comment }}</p>
       </v-card-text>
 
     </v-card>
 
-    <v-card
+    <v-card v-if="movie.grade === 0"
         class="elevation-16 mx-auto"
         width="800"
     >
@@ -103,7 +95,7 @@
           No Thanks
         </v-btn>
         <v-btn
-
+            @click="rateMovie"
             color="primary"
             text
         >
@@ -112,9 +104,26 @@
       </v-card-actions>
     </v-card>
 
-    <v-btn @click="rateMovie">
-      Noter
-    </v-btn>
+    <div class="container" v-if="movie.comment === ''">
+      <v-container fluid>
+        <v-textarea
+            label="Laisser un commentaire sur le film"
+            auto-grow
+            outlined
+            row="1"
+            row-height="5"
+            v-model="comment"
+           >
+        </v-textarea>
+
+        <v-btn
+          class="success"
+          @click="addComment"
+          >
+          Poster son commentaire
+        </v-btn>
+      </v-container>
+    </div>
 
   </div>
 
@@ -126,27 +135,82 @@ import axios from "axios";
 export default {
   name: "Movie",
   props: {
-    movie: Object,
     id: Number
   },
   data: () => {
     return {
       rating: 0,
-      adddRating: false
-    }
-  },
+      adddRating: false,
+      commentJustAdd: false,
+      movie: [],
+      moviesGenres: [],
+      genresNames: [],
+      comment: ""
+      }
+    },
   methods: {
     rateMovie() {
-      // axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
       axios
-          .put("https://apimovietest.herokuapp.com/api/movies/1",{
-            grade: 6
+          .put("https://apimovietest.herokuapp.com/api/movies/" + this.id,{
+            grade: this.rating
           }
-          ).then(() => this.adddRating = true)
+          ).then(() => {
+            this.adddRating = true;
+            // this.movie.rating = this.rating;
+            this.displayMovie();
+          })
           .catch(e => {
             alert(e.message)
           })
+    },
+    addComment() {
+      axios
+          .put("https://apimovietest.herokuapp.com/api/movies/" + this.id,{
+                comment: this.comment
+              }
+          ).then(() => {
+        this.commentJustAdd = true;
+        // this.movie.rating = this.rating;
+        this.displayMovie();
+      })
+          .catch(e => {
+            alert(e.message)
+          })
+    },
+    displayMovie() {
+      axios
+        .get("https://apimovietest.herokuapp.com/api/movies/" + this.id)
+        .then(
+            response => {
+              console.log(response.data);
+              this.movie = response.data;
+            }
+        )
+    },
+    genreNames() {
+      this.moviesGenres.forEach(movie => {
+       this.genresNames[movie.id] = movie.name;
+      })
     }
+  },
+  mounted() {
+    this.displayMovie();
+    axios
+        .get("https://api.themoviedb.org/3/genre/movie/list?api_key=80d0dd074cbffeb2db4b0123882c7f44&language=en-US")
+        .then(
+            response => {
+              console.log(response.data.genres);
+              this.moviesGenres = response.data.genres;
+
+            }
+        )
+        .then(() => {
+          this.genreNames();
+        })
+        .catch(e => {
+          alert(e)
+        });
+
   }
 }
 </script>
