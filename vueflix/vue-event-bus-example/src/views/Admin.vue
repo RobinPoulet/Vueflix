@@ -5,26 +5,18 @@
 
     <h1>{{ title }}</h1>
 
-    <router-link to="/admin/createPlaylist">
+    <router-link to="/admin/playlistBackoffice">
       <v-btn
         class="ma-2"
-        blue
+        color="secondary"
         >
-        <v-icon
-          blue
-          left
-          >
-          mdi-minus-circle
-        </v-icon>
-        Créer une playlist
+        Playlist Backoffice
       </v-btn>
     </router-link>
 
     <movies-list :admin="true" :playlist="false"/>
 
-    <MovieCreation />
-
-
+    <MovieCreation/>
 
   </div>
 </template>

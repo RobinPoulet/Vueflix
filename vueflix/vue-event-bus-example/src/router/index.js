@@ -5,6 +5,7 @@ import Admin from "@/views/Admin";
 import Movie from "@/views/Movie";
 import CreatePlaylist from "../views/CreatePlaylist";
 import PlaylistEdit from "../views/PlaylistEdit";
+import PlaylistBackoffice from "../views/PlaylistBackoffice";
 
 
 Vue.use(VueRouter)
@@ -33,6 +34,11 @@ const routes = [
     name: 'Movie',
     component: Movie,
     props: true
+  },
+  {
+    path: '/admin/playlistBackoffice',
+    name: 'PlaylistBackoffice',
+    component: PlaylistBackoffice
   },
   {
     path: '/admin/createPlaylist',
