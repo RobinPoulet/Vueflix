@@ -26,7 +26,7 @@ export default {
 
 h1
 {
-  font-size: 120px;
+  font-size: 80px;
   font-family:Arial, Helvetica, sans-serif;
   text-align: center;
   text-decoration: underline;

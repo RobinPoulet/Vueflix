@@ -9,7 +9,7 @@
       <v-list-item two-line v-for="playlist in playlists" :key="playlist.id">
         <v-list-item-content>
           <v-list-item-title>
-            <h3> {{ playlist.title }} </h3>
+            <h3> {{ playlist.name }} </h3>
           </v-list-item-title>
           <v-list-item-subtitle>
             <router-link
@@ -29,6 +29,28 @@
                       large
                   >
                     Ajouter ou supprimer un film dans la Playlist
+                  </v-btn>
+
+                </div>
+              </v-container>
+            </router-link>
+            <router-link
+                         :to="{
+              name: 'Playlist',
+              params: { id: playlist.id, playlist: playlist}
+            }"
+            >
+              <v-container
+                  fluid
+                  class="pa-0"
+              >
+                <div class="my-2">
+                  <v-btn
+                      color="success"
+                      dark
+                      large
+                  >
+                    Voir le détail de la playlist
                   </v-btn>
 
                 </div>
@@ -79,11 +101,12 @@ export default {
     deletePlaylist: function (id) {
       axios
           .delete("https://apimovietest.herokuapp.com/api/moviesLists/" + id)
-          .then()
+          .then(() => this.getAllPlaylists())
           .catch(e => {
             alert(e);
           })
-    }
+    },
+
   },
   mounted() {
     this.getAllPlaylists();

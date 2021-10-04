@@ -217,8 +217,6 @@ export default {
     },
     getResult: function () {
 
-      this.userAdd = false;
-
       if (this.search !== "") {
 
         axios

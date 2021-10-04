@@ -1,7 +1,7 @@
 <template>
   <div class="playlistbackoffice">
 
-    <h1>Bienvenue sur la page de gestion de vos playlists</h1>
+    <h2 class="playlistBackofficeTitle">Bienvenue sur la page de gestion de vos playlists</h2>
 
     <router-link to="/admin/createPlaylist">
       <v-btn
@@ -17,6 +17,8 @@
         Créer une playlist
       </v-btn>
     </router-link>
+
+    <h3>Vos Playlists</h3>
 
     <PlaylistsList/>
 
@@ -35,5 +37,7 @@ export default {
 </script>
 
 <style scoped>
-
+.playlistBackofficeTitle {
+  font-size:40px;
+}
 </style>

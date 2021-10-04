@@ -6,6 +6,7 @@ import Movie from "@/views/Movie";
 import CreatePlaylist from "../views/CreatePlaylist";
 import PlaylistEdit from "../views/PlaylistEdit";
 import PlaylistBackoffice from "../views/PlaylistBackoffice";
+import Playlist from "../views/Playlist";
 
 
 Vue.use(VueRouter)
@@ -50,6 +51,12 @@ const routes = [
     path: '/admin/playlist/edit/:id',
     name: 'PlaylistEdit',
     component: PlaylistEdit,
+    props: true
+  },
+  {
+    path: '/admin/playlist/:id',
+    name: 'Playlist',
+    component: Playlist,
     props: true
   }
 ]
