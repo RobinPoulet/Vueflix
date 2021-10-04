@@ -174,10 +174,14 @@ export default {
             alert(e)
           })
     },
-   getLastId: function () {
+    getLastId: function () {
       let lastPlaylist = this.playlist.pop();
-      this.lastId = lastPlaylist.id;
-   }
+      if (!lastPlaylist) {
+        this.lastId = 1;
+      } else {
+        this.lastId = lastPlaylist.id;
+      }
+    }
   },
   mounted() {
     this.getAllPlaylists();

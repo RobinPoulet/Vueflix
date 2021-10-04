@@ -140,7 +140,7 @@ export default {
     },
     deleteMovieFromPlaylist: function (id) {
       axios
-          .delete("https://apimovietest.herokuapp.com/api/" + this.playlist.id + "/" + id)
+          .delete("https://apimovietest.herokuapp.com/api/moviesLists/" + this.playlist.id + "/" + id)
           .then()
           .catch(e => {
             alert(e);
