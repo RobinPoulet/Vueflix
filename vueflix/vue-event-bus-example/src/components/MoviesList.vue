@@ -74,26 +74,10 @@
             >
               Supprimer ce film
             </v-btn>
-            <v-btn v-if="playlist"
-                   color="success"
-                   small
-                   @click="addMovieToPlaylist(movie)"
-            >
-              Ajouter le film à la playlist
-            </v-btn>
 
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
-
-
-      <v-btn v-if="playlist"
-             color="success"
-             small
-             @click="playlistCreation"
-             >
-        Valider la playlist
-      </v-btn>
 
     </v-card>
 
@@ -102,7 +86,6 @@
 </template>
 
 <script>
-import {EventBus} from "@/event-bus";
 import axios from "axios";
 
 
@@ -133,12 +116,6 @@ export default {
     }
   },
   methods: {
-    addMovie: function (newMovie) {
-      this.movies.push(newMovie);
-    },
-    addMovieToPlaylist: function (movie) {
-      this.playlistMovie.push(movie);
-    },
     getAllMoviesGenres: function () {
       axios
           .get("https://api.themoviedb.org/3/genre/movie/list?api_key=80d0dd074cbffeb2db4b0123882c7f44&language=en-US")
@@ -174,15 +151,12 @@ export default {
           .catch(e => {
             alert(e);
           })
-    },
-    playlistCreation() {
-      EventBus.$emit('cliked', this.playlistMovie);
     }
   },
   mounted() {
     this.getAllMovies();
     this.getAllMoviesGenres();
-    EventBus.$on('cliked', this.addMovie);
+
   }
 }
 

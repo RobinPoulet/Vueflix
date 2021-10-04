@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Admin from "@/views/Admin";
 import Movie from "@/views/Movie";
+import CreatePlaylist from "../views/CreatePlaylist";
+import PlaylistEdit from "../views/PlaylistEdit";
 
 
 Vue.use(VueRouter)
@@ -30,6 +32,18 @@ const routes = [
     path: '/movie/:id',
     name: 'Movie',
     component: Movie,
+    props: true
+  },
+  {
+    path: '/admin/createPlaylist',
+    name: 'CreatePlaylist',
+    component: CreatePlaylist,
+    props: true
+  },
+  {
+    path: '/admin/playlist/edit/:id',
+    name: 'PlaylistEdit',
+    component: PlaylistEdit,
     props: true
   }
 ]

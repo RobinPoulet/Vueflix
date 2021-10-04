@@ -5,9 +5,24 @@
 
     <h1>{{ title }}</h1>
 
+    <router-link to="/admin/createPlaylist">
+      <v-btn
+        class="ma-2"
+        blue
+        >
+        <v-icon
+          blue
+          left
+          >
+          mdi-minus-circle
+        </v-icon>
+        Créer une playlist
+      </v-btn>
+    </router-link>
+
     <movies-list :admin="true" :playlist="false"/>
 
-    <MovieCreation/>
+    <MovieCreation />
 
 
 
