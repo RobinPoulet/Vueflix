@@ -95,7 +95,6 @@ export default {
   data: function () {
     return {
       selectGenre: null,
-      moviesGenres: [],
       playlistMovie: [],
     }
   },
@@ -106,6 +105,9 @@ export default {
   computed: {
     moviesList() {
       return this.$store.state.moviesList
+    },
+    moviesGenres() {
+      return this.$store.state.moviesGenres
     },
     filteredMovies() {
       if (this.selectGenre === null) {
@@ -118,19 +120,6 @@ export default {
     }
   },
   methods: {
-    getAllMoviesGenres: function () {
-      axios
-          .get("https://api.themoviedb.org/3/genre/movie/list?api_key=80d0dd074cbffeb2db4b0123882c7f44&language=en-US")
-          .then(
-              response => {
-                console.log(response.data.genres);
-                this.moviesGenres = response.data.genres;
-              }
-          )
-          .catch(e => {
-            alert(e)
-          });
-    },
     deleteMovie(id) {
       axios
           .delete("https://apimovietest.herokuapp.com/api/movies/" + id)
@@ -142,8 +131,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getMoviesList");
-    this.getAllMovies();
-    this.getAllMoviesGenres();
+    this.$store.dispatch("getAllMoviesGenres");
 
   }
 }
