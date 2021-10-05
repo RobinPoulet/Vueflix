@@ -2,29 +2,11 @@
 
   <div class="movieslist">
 
-    <h3>Nombre de film de la liste : {{ filteredMovies.length }}</h3>
+<!--    <h3>Nombre de film de la liste : {{ filteredMovies.length }}</h3>-->
 
-    <v-container fluid>
 
-      <h4>Afficher la liste de films selon les catégories choisies</h4>
 
-      <v-row>
-
-        <v-col v-for="(genre, index) in moviesGenres" :key="index">
-
-          <v-checkbox
-              v-model="selectGenre"
-              :label="genre.name"
-              :value="genre.id"
-          ></v-checkbox>
-
-        </v-col>
-
-      </v-row>
-
-      <h2>Liste des films</h2>
-
-    </v-container>
+    <h2>Liste des films</h2>
 
     <v-card
         class="mx-auto"
@@ -94,20 +76,17 @@ export default {
   components: {},
   data: function () {
     return {
-      selectGenre: null,
       playlistMovie: [],
     }
   },
   props: {
     admin: Boolean,
-    playlist: Boolean
+    playlist: Boolean,
+    selectGenre: String
   },
   computed: {
     moviesList() {
       return this.$store.state.moviesList
-    },
-    moviesGenres() {
-      return this.$store.state.moviesGenres
     },
     filteredMovies() {
       if (this.selectGenre === null) {
@@ -131,8 +110,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getMoviesList");
-    this.$store.dispatch("getAllMoviesGenres");
-
   }
 }
 
