@@ -31,7 +31,7 @@
         max-width="1600"
         tile
     >
-      <v-list-item two-line v-for="movie in filteredMovies" :key="movie.id">
+      <v-list-item two-line v-for="movie in moviesList" :key="movie.id">
         <v-list-item-content>
           <v-list-item-title>
             <h3> {{ movie.title }} </h3>
@@ -94,7 +94,6 @@ export default {
   components: {},
   data: function () {
     return {
-      movies: [],
       selectGenre: null,
       moviesGenres: [],
       playlistMovie: [],
@@ -105,11 +104,14 @@ export default {
     playlist: Boolean
   },
   computed: {
+    moviesList() {
+      return this.$store.state.moviesList
+    },
     filteredMovies() {
       if (this.selectGenre === null) {
-        return this.movies;
+        return this.moviesList;
       } else {
-        return this.movies.filter(movie => {
+        return this.moviesList.filter(movie => {
           return movie.genres.includes(this.selectGenre)
         })
       }
@@ -129,21 +131,6 @@ export default {
             alert(e)
           });
     },
-    getAllMovies: function () {
-      axios
-          .get("https://apimovietest.herokuapp.com/api/movies")
-          .then(
-              response => {
-                const allData = response.data;
-                allData.forEach(data => {
-                  this.movies.push(data.value)
-                })
-              }
-          )
-          .catch(e => {
-            alert(e)
-          });
-    },
     deleteMovie(id) {
       axios
           .delete("https://apimovietest.herokuapp.com/api/movies/" + id)
@@ -154,6 +141,7 @@ export default {
     }
   },
   mounted() {
+    this.$store.dispatch("getMoviesList");
     this.getAllMovies();
     this.getAllMoviesGenres();
 
