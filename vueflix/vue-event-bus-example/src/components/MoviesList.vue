@@ -2,9 +2,7 @@
 
   <div class="movieslist">
 
-<!--    <h3>Nombre de film de la liste : {{ filteredMovies.length }}</h3>-->
-
-
+    <h3>Nombre de film de la liste : {{ filteredMovies.length }}</h3>
 
     <h2>Liste des films</h2>
 
@@ -13,7 +11,7 @@
         max-width="1600"
         tile
     >
-      <v-list-item two-line v-for="movie in moviesList" :key="movie.id">
+      <v-list-item two-line v-for="movie in filteredMovies" :key="movie.id">
         <v-list-item-content>
           <v-list-item-title>
             <h3> {{ movie.title }} </h3>
@@ -69,7 +67,7 @@
 
 <script>
 import axios from "axios";
-
+import EventBus from "../event-bus";
 
 export default {
   name: "MoviesList",
@@ -77,19 +75,19 @@ export default {
   data: function () {
     return {
       playlistMovie: [],
+      selectGenre: ""
     }
   },
   props: {
     admin: Boolean,
     playlist: Boolean,
-    selectGenre: String
   },
   computed: {
     moviesList() {
       return this.$store.state.moviesList
     },
     filteredMovies() {
-      if (this.selectGenre === null) {
+      if (this.selectGenre === "" || this.selectGenre === null) {
         return this.moviesList;
       } else {
         return this.moviesList.filter(movie => {
@@ -110,6 +108,9 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getMoviesList");
+    EventBus.$on('changeSelect', (data) => {
+      this.selectGenre = data;
+    })
   }
 }
 

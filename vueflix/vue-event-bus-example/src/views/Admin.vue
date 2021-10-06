@@ -20,6 +20,8 @@
 
     </v-container>
 
+    <MoviesFilter/>
+
     <movies-list :admin="true" :playlist="false"/>
 
     <MovieCreation/>
@@ -32,13 +34,15 @@
 
 import MoviesList from "@/components/MoviesList";
 import MovieCreation from "@/components/MovieCreation";
+import MoviesFilter from "../components/MoviesFilter";
 
 export default {
   name: 'App',
   components: {
     //   HelloWorld
     MoviesList,
-    MovieCreation
+    MovieCreation,
+    MoviesFilter
   },
   data: function () {
     return {

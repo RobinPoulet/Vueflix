@@ -5,7 +5,7 @@
 
     <MoviesFilter/>
 
-    <MoviesList :admin="false" :selectGenre="selectGenre" />
+    <MoviesList :admin="false"/>
 
   </div>
 </template>
@@ -16,7 +16,7 @@
 
 import MoviesList from "@/components/MoviesList";
 import MoviesFilter from "../components/MoviesFilter";
-import EventBus from "../event-bus";
+
 
 export default {
   name: 'Home',
@@ -26,13 +26,10 @@ export default {
   },
   data() {
     return {
-    selectGenre: ""
     }
   },
   mounted() {
-    EventBus.$on('changeSelect', (data) => {
-      this.selectGenre = data;
-    })
+
   }
 }
 </script>
