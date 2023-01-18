@@ -359,7 +359,7 @@ Votre projet sera disponible à l'adresse indiquée.
 
 Pour mieux gérer les différents appels à l'API, il serait bien de mettre en place une gestion centralisée de l'état de votre application.
 
-Vuex est un store qui nous permet de faire cela, la doc est disponible : https://vuex.vuejs.org/fr/
+Vuex est un store qui nous permet de faire cela, la doc est disponible : https://vuex.vuejs.org
 
 En vous inspirant des resources mettre en place Vuex dans votre application et faire en sorte que tous les appels aux APIs se fassent dans le store, et non directement dans les vues (ou composants).
 
