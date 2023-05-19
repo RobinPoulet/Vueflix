@@ -1,4 +1,4 @@
-# vue-event-bus-example
+# vueflix
 
 ## Project setup
 ```
