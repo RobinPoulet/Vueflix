@@ -1,4 +1,4 @@
-# vueflix
+# vueflix origin
 
 ## Project setup
 ```
