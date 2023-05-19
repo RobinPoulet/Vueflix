@@ -311,21 +311,7 @@ https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Utiliser_les_promesse
 Utiliser async/await, les fonctions asynchrones de ES2017 : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/async_function
 
 
-## 9. Utiliser l'API développée sous Node.js pour annoter les films et constituer des playlists
-
-Votre application gère maintenant une liste de films, identifiés par une propriété `id`.
-
-Ces données sont stockées par la webapp, donc leur durée de vie est limitée à la session de travail du navigateur. De plus, il n'est pas possible de partager ces données entre plusieurs machines (un ordinateur et un smartphone par exemple).
-
-Pour remédier à ces limitations, utilisez l'API que vous avez développée sous Node.js pour enregistrer et récupérer les données associées à chaque film.
-Vous pouvez modifier le code de votre API pour supporter tous les champs demandés (`title`, `genres`, ...) ou utiliser l'API de themoviedb pour récupérer les données non gérées par votre API.
-
-Donnez à l'utilisateur de votre application un moyen de créer, modifier et supprimer des playlists, c'est à dire des listes nommées et _ordonnées_ de films (et donc fusionner les données de plusieurs APIs pour les afficher).
-
-Idée bonus (non obligatoire) : l'utilisateur peut réorganiser le contenu d'une playlist par _drag & drop_.
-
-
-## 10. Déploiement : publier l'application
+## 9. Déploiement : publier l'application
 
 ### Génération du projet en local
 
@@ -369,11 +355,11 @@ Depuis votre repo sur GitHub :
 
 Votre projet sera disponible à l'adresse indiquée.
 
-## 11. Bonus
+## 10. Bonus
 
 Pour mieux gérer les différents appels à l'API, il serait bien de mettre en place une gestion centralisée de l'état de votre application.
 
-Vuex est un store qui nous permet de faire cela, la doc est disponible : https://vuex.vuejs.org/fr/
+Vuex est un store qui nous permet de faire cela, la doc est disponible : https://vuex.vuejs.org
 
 En vous inspirant des resources mettre en place Vuex dans votre application et faire en sorte que tous les appels aux APIs se fassent dans le store, et non directement dans les vues (ou composants).
 
